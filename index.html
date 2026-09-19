@@ -33,24 +33,53 @@
     
     <style>
         /* Base styles */
-        body {
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             font-family: 'Montserrat', sans-serif;
             background-color: black;
             color: white;
-            /* Prevent horizontal scroll, allow vertical scroll */
-            overflow-x: hidden; 
+            /* Prevent body level scrolling */
+            overflow: hidden; 
         }
         
         ::selection {
             background-color: #a882d4;
             color: white;
         }
+
+        /* Container that handles the snap scrolling */
+        .snap-container {
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            /* Hide scrollbar for cleaner look (optional) */
+            scrollbar-width: none; /* Firefox */
+        }
+        .snap-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
+        }
+
+        /* Each page section */
+        .snap-section {
+            width: 100%;
+            height: 100vh;
+            scroll-snap-align: start;
+            scroll-snap-stop: always; /* Forces stopping at each page */
+            position: relative;
+            overflow: hidden; /* Ensure content doesn't break out of the 100vh box */
+        }
     </style>
 </head>
 
 <body class="m-0 p-0">
 
-    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-transparent py-6">
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-transparent py-6 pointer-events-auto">
         <div class="container mx-auto px-6 md:px-12 flex justify-between items-center">
             
             <!-- Logo -->
@@ -60,11 +89,11 @@
 
             <!-- Desktop Menu -->
             <nav class="hidden md:flex space-x-8">
-                <a href="#" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Brand Mission</a>
-                <a href="#brand-vision" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Brand Vision</a>
-                <a href="#" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Core Technology</a>
-                <a href="#" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Products</a>
-                <a href="#" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Partnerships</a>
+                <a href="#mission" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Brand Mission</a>
+                <a href="#vision" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Brand Vision</a>
+                <a href="#core-tech-title" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Core Technology</a>
+                <a href="#products-title" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Products</a>
+                <a href="#partnerships" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Partnerships</a>
             </nav>
 
             <!-- Mobile Menu Toggle Button -->
@@ -75,7 +104,7 @@
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
-                <!-- Close Icon (Hidden by default) -->
+                <!-- Close Icon -->
                 <svg id="icon-close" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -86,124 +115,255 @@
         <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-black/95 border-t border-gray-800 py-4 backdrop-blur-md">
             <nav class="flex flex-col px-6 space-y-4">
-                <a href="#" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Brand Mission</a>
-                <a href="#brand-vision" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Brand Vision</a>
-                <a href="#" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Core Technology</a>
-                <a href="#" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Products</a>
-                <a href="#" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Partnerships</a>
+                <a href="#mission" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Brand Mission</a>
+                <a href="#vision" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Brand Vision</a>
+                <a href="#core-tech-title" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Core Technology</a>
+                <a href="#products-title" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Products</a>
+                <a href="#partnerships" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Partnerships</a>
             </nav>
         </div>
     </header>
 
-    <main class="relative w-full h-screen flex items-center justify-center overflow-hidden">
+    <!-- Main Scroll Container -->
+    <div class="snap-container">
         
-        <!-- Background Video -->
-        <div class="absolute inset-0 w-full h-full z-0 bg-black">
-            <video 
-                autoplay 
-                loop 
-                muted 
-                playsinline 
-                class="w-full h-full object-cover scale-105 opacity-80 pointer-events-none"
-            >
-                <source src="https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/0919.mp4?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS8wOTE5Lm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODk4MDAxOTcsImV4cCI6MTgyMTMzNjE5N30.UITim8OdWrwZPBDaweWf_Jams5nPDu5RPS6aqJq3DMGUw9PSMR0-Qf9s2nMmkdqI6P8RTQpw6NutiwV3NwN1jw" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            
-            <!-- Dark Gradient Overlay for text readability -->
-            <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
-        </div>
-
-        <!-- Main Content Container positioned top-left -->
-        <div class="relative z-10 container mx-auto px-6 md:px-12 h-full flex flex-col justify-center items-start pt-20">
-            
-            <!-- Main Copy with Quotes, Italics, Thicker Weights, and White Color -->
-            <h1 id="typewriter-container" class="leading-none max-w-5xl text-left flex flex-col items-start min-h-[300px] italic drop-shadow-2xl">
-                <div class="flex items-end flex-wrap mb-2">
-                    <span class="text-2xl sm:text-3xl md:text-4xl font-medium text-white tracking-wide" data-text="“Skin aging is a "></span>
-                </div>
-                <div class="mb-8 md:pl-8 mt-1">
-                    <span class="text-6xl sm:text-7xl md:text-[6.5rem] font-black tracking-tighter text-white" data-text="Disease."></span>
-                </div>
-                <div class="flex items-baseline gap-4 flex-wrap mt-2 md:pl-4">
-                    <span class="text-xl sm:text-2xl md:text-3xl font-medium text-white tracking-wide" data-text="We provide the "></span>
-                    <span class="text-6xl sm:text-7xl md:text-[6.5rem] font-black tracking-tighter text-white" data-text="Cure.”"></span>
-                </div>
-            </h1>
-            
-        </div>
-    </main>
-
-    <!-- Brand Vision Section -->
-    <section id="brand-vision" class="relative w-full min-h-screen flex items-center justify-center py-20">
-        <!-- Background Image -->
-        <div class="absolute inset-0 w-full h-full z-0 bg-black">
-            <img src="https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/images%20(1).jpg?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS9pbWFnZXMgKDEpLmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODk4MDc0MDUsImV4cCI6MjEwNTE2NzQwNX0.GGzKuLm7BAFXbUDIz5TotBnRkwt_SuIvaYIfvhFJDZnVjeGnLFEFmMjuFnEZ3cVRWqDVHjTWSuAcR7nrugmGFw" alt="Brand Vision Background" class="w-full h-full object-cover opacity-75">
-            <!-- Simple Dark Gradient Overlay for text readability ONLY -->
-            <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/50 to-transparent"></div>
-        </div>
-
-        <!-- Content Container -->
-        <div class="relative z-10 container mx-auto px-6 md:px-12 h-full flex flex-col justify-center items-start">
-            
-            <!-- Main Copy -->
-            <h2 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-white italic mb-16 drop-shadow-2xl">
-                From Anti-aging to <br class="md:hidden" /><span class="text-transparent bg-clip-text bg-gradient-to-r from-prism-mid to-prism-light">Reverse Aging.</span>
-            </h2>
-
-            <!-- Timeline Roadmap -->
-            <div class="flex flex-col max-w-3xl mt-4">
-                
-                <!-- 2026 -->
-                <div class="flex group">
-                    <!-- Timeline Line & Dot -->
-                    <div class="flex flex-col items-center mr-6 md:mr-10">
-                        <div class="w-4 h-4 rounded-full bg-prism-light shadow-[0_0_15px_rgba(244,200,162,0.8)] mt-2 group-hover:scale-125 transition-transform duration-300"></div>
-                        <!-- Line -->
-                        <div class="w-px h-full bg-gray-600/50 mt-2"></div>
-                    </div>
-                    <!-- Content -->
-                    <div class="pb-12">
-                        <h3 class="text-3xl md:text-4xl font-bold text-prism-light mb-2 tracking-wide">2026</h3>
-                        <h4 class="text-xl md:text-2xl text-white font-semibold mb-3">Launch of the R2DN Line</h4>
-                        <p class="text-gray-400 font-light leading-relaxed text-sm md:text-base">
-                            Introducing regenerative creams, regenerative ampoules, mask packs, and acne patches based on our proprietary h-dECM and PDRN technology.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 2027 -->
-                <div class="flex group">
-                    <div class="flex flex-col items-center mr-6 md:mr-10">
-                        <div class="w-4 h-4 rounded-full bg-prism-mid shadow-[0_0_15px_rgba(168,130,212,0.8)] mt-2 group-hover:scale-125 transition-transform duration-300"></div>
-                        <div class="w-px h-full bg-gray-600/50 mt-2"></div>
-                    </div>
-                    <div class="pb-12">
-                        <h3 class="text-3xl md:text-4xl font-bold text-prism-mid mb-2 tracking-wide">2027</h3>
-                        <h4 class="text-xl md:text-2xl text-white font-semibold mb-3">Expansion of the R2DN Line</h4>
-                        <p class="text-gray-400 font-light leading-relaxed text-sm md:text-base">
-                            Launching innovative medical device products specifically targeted for the treatment of intractable acne, melasma, and erythema.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 2028 -->
-                <div class="flex group">
-                    <div class="flex flex-col items-center mr-6 md:mr-10">
-                        <div class="w-4 h-4 rounded-full bg-prism-deep shadow-[0_0_15px_rgba(75,48,117,0.8)] mt-2 group-hover:scale-125 transition-transform duration-300"></div>
-                    </div>
-                    <div class="pb-4">
-                        <h3 class="text-3xl md:text-4xl font-bold text-prism-deep mb-2 tracking-wide">2028</h3>
-                        <h4 class="text-xl md:text-2xl text-white font-semibold mb-3">R2DN Treatment Centers</h4>
-                        <p class="text-gray-400 font-light leading-relaxed text-sm md:text-base">
-                            Establishment of specialized procedure centers based on the R2DN product line and our advanced cellular regeneration protocols.
-                        </p>
-                    </div>
-                </div>
-
+        <!-- PAGE 1: Brand Mission -->
+        <main id="mission" class="snap-section flex items-center justify-center">
+            <!-- Background Video -->
+            <div class="absolute inset-0 w-full h-full z-0 bg-black">
+                <video autoplay loop muted playsinline class="w-full h-full object-cover scale-105 opacity-80 pointer-events-none">
+                    <source src="https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/0919.mp4?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS8wOTE5Lm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODk4MDAxOTcsImV4cCI6MTgyMTMzNjE5N30.UITim8OdWrwZPBDaweWf_Jams5nPDu5RPS6aqJq3DMGUw9PSMR0-Qf9s2nMmkdqI6P8RTQpw6NutiwV3NwN1jw" type="video/mp4">
+                </video>
+                <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
             </div>
-        </div>
-    </section>
+
+            <!-- Content -->
+            <div class="relative z-10 container mx-auto px-6 md:px-12 h-full flex flex-col justify-center items-start pt-16">
+                <h1 id="typewriter-container" class="leading-none max-w-5xl text-left flex flex-col items-start min-h-[300px] italic drop-shadow-2xl">
+                    <div class="flex items-end flex-wrap mb-2">
+                        <span class="text-2xl sm:text-3xl md:text-4xl font-medium text-white tracking-wide" data-text="“Skin aging is a "></span>
+                    </div>
+                    <div class="mb-8 md:pl-8 mt-1">
+                        <span class="text-6xl sm:text-7xl md:text-[6.5rem] font-black tracking-tighter text-white" data-text="Disease."></span>
+                    </div>
+                    <div class="flex items-baseline gap-4 flex-wrap mt-2 md:pl-4">
+                        <span class="text-xl sm:text-2xl md:text-3xl font-medium text-white tracking-wide" data-text="We provide the "></span>
+                        <span class="text-6xl sm:text-7xl md:text-[6.5rem] font-black tracking-tighter text-white" data-text="Cure.”"></span>
+                    </div>
+                </h1>
+            </div>
+        </main>
+
+        <!-- PAGE 2: Brand Vision -->
+        <section id="vision" class="snap-section flex items-center justify-center">
+            <div class="absolute inset-0 w-full h-full z-0 bg-black">
+                <img src="https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/images%20(1).jpg?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS9pbWFnZXMgKDEpLmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODk4MDc0MDUsImV4cCI6MjEwNTE2NzQwNX0.GGzKuLm7BAFXbUDIz5TotBnRkwt_SuIvaYIfvhFJDZnVjeGnLFEFmMjuFnEZ3cVRWqDVHjTWSuAcR7nrugmGFw" alt="Brand Vision Background" class="w-full h-full object-cover opacity-75">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/50 to-transparent"></div>
+            </div>
+
+            <div class="relative z-10 container mx-auto px-6 md:px-12 h-full flex flex-col justify-center items-start pt-16">
+                <h2 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-white italic mb-10 drop-shadow-2xl">
+                    From Anti-aging to <br class="md:hidden" /><span class="text-transparent bg-clip-text bg-gradient-to-r from-prism-mid to-prism-light">Reverse Aging.</span>
+                </h2>
+                <div class="flex flex-col max-w-3xl overflow-y-auto max-h-[50vh] pr-4" style="scrollbar-width: none;">
+                    <div class="flex group">
+                        <div class="flex flex-col items-center mr-6 md:mr-10">
+                            <div class="w-4 h-4 rounded-full bg-prism-light shadow-[0_0_15px_rgba(244,200,162,0.8)] mt-2 group-hover:scale-125 transition-transform duration-300"></div>
+                            <div class="w-px h-full bg-gray-600/50 mt-2"></div>
+                        </div>
+                        <div class="pb-8">
+                            <h3 class="text-3xl md:text-4xl font-bold text-prism-light mb-2 tracking-wide">2026</h3>
+                            <h4 class="text-xl md:text-2xl text-white font-semibold mb-2">Launch of the R2DN Line</h4>
+                            <p class="text-gray-400 font-light text-sm md:text-base">Introducing regenerative creams, regenerative ampoules, mask packs, and acne patches based on our proprietary h-dECM and PDRN technology.</p>
+                        </div>
+                    </div>
+                    <div class="flex group">
+                        <div class="flex flex-col items-center mr-6 md:mr-10">
+                            <div class="w-4 h-4 rounded-full bg-prism-mid shadow-[0_0_15px_rgba(168,130,212,0.8)] mt-2 group-hover:scale-125 transition-transform duration-300"></div>
+                            <div class="w-px h-full bg-gray-600/50 mt-2"></div>
+                        </div>
+                        <div class="pb-8">
+                            <h3 class="text-3xl md:text-4xl font-bold text-prism-mid mb-2 tracking-wide">2027</h3>
+                            <h4 class="text-xl md:text-2xl text-white font-semibold mb-2">Expansion of the R2DN Line</h4>
+                            <p class="text-gray-400 font-light text-sm md:text-base">Launching innovative medical device products specifically targeted for the treatment of intractable acne, melasma, and erythema.</p>
+                        </div>
+                    </div>
+                    <div class="flex group">
+                        <div class="flex flex-col items-center mr-6 md:mr-10">
+                            <div class="w-4 h-4 rounded-full bg-prism-deep shadow-[0_0_15px_rgba(75,48,117,0.8)] mt-2 group-hover:scale-125 transition-transform duration-300"></div>
+                        </div>
+                        <div class="pb-4">
+                            <h3 class="text-3xl md:text-4xl font-bold text-prism-deep mb-2 tracking-wide">2028</h3>
+                            <h4 class="text-xl md:text-2xl text-white font-semibold mb-2">R2DN Treatment Centers</h4>
+                            <p class="text-gray-400 font-light text-sm md:text-base">Establishment of specialized procedure centers based on the R2DN product line and our advanced cellular regeneration protocols.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 3: Core Technology Title -->
+        <section id="core-tech-title" class="snap-section flex items-center justify-center">
+            <div class="absolute inset-0 w-full h-full z-0 bg-black">
+                <video autoplay loop muted playsinline class="w-full h-full object-cover scale-105 opacity-80 pointer-events-none">
+                    <source src="https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/grok-video-a8991c85-8906-4de6-96ea-a72cf0643c4e.mp4?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS9ncm9rLXZpZGVvLWE4OTkxYzg1LTg5MDYtNGRlNi05NmVhLWE3MmNmMDY0M2M0ZS5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg5ODE1OTMyLCJleHAiOjIxMDUxNzU5MzJ9.ggguUbPjFJWWChf0hTio92hIYuU801HFLioZfUKuuoQjhyB9DBIp_dHqwRV3oLiCSrOcz3b7jWXERj98CJVsyA" type="video/mp4">
+                </video>
+                <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/50 to-transparent"></div>
+            </div>
+            <div class="relative z-10 container mx-auto px-6 md:px-12 h-full flex flex-col justify-center items-center text-center">
+                <h2 class="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter text-white italic drop-shadow-2xl">
+                    Core <br class="md:hidden" /><span class="text-transparent bg-clip-text bg-gradient-to-r from-prism-mid to-prism-light">Technology.</span>
+                </h2>
+            </div>
+        </section>
+
+        <!-- PAGE 4: Core Tech 01 -->
+        <section id="core-tech-01" class="snap-section bg-black flex flex-col justify-center pt-20 pb-10">
+            <div class="container mx-auto px-4 md:px-8 h-full flex flex-col items-center justify-center">
+                <div class="w-full max-w-4xl flex flex-col items-center flex-shrink-0">
+                    <span class="text-prism-light font-black tracking-widest uppercase text-2xl md:text-3xl mb-2">01</span>
+                    <p class="text-white font-bold mb-6 text-xl md:text-2xl uppercase tracking-wide text-center">
+                        Supercritical fluid-based ECM molecular size reduction
+                    </p>
+                    
+                    <div class="flex items-center justify-center gap-3 md:gap-4 mb-4">
+                        <div class="px-5 py-2 md:px-6 md:py-2 rounded-full border border-gray-600 text-gray-300 font-medium text-sm md:text-base bg-white/5">13,520 Da</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                        <div class="px-5 py-2 md:px-6 md:py-2 rounded-full bg-prism-mid text-white font-bold text-sm md:text-base shadow-[0_0_15px_rgba(168,130,212,0.6)]">3,089 Da</div>
+                    </div>
+
+                    <p class="text-gray-400 font-light leading-relaxed text-base md:text-lg max-w-3xl text-left w-full">
+                        Hydrolyzed dECM showed a reduction in molecular weight from 13,520 Da to 3,089 Da while preserving key ECM components, and fluorescence analysis confirmed its delivery into the dermal layer.
+                    </p>
+                </div>
+                <div class="w-full relative flex-1 flex items-center justify-center mt-6 min-h-0 group">
+                    <div class="absolute inset-0 bg-gradient-to-b from-prism-deep to-prism-mid rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                    <img src="https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/dual_panel_absorption_labeled.gif?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS9kdWFsX3BhbmVsX2Fic29ycHRpb25fbGFiZWxlZC5naWYiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg5ODE0MjI0LCJleHAiOjE3OTA2NzgyMjR9.BkR4smqbrQMgR_ppTWrNmxVp3jBElL3ElnrjwLh5n33A8Ks2b9UAR7-TlZGAVcJ6SrM08a7Qn7qri7YPAwlmcQ" alt="Technology 01" class="relative rounded-2xl w-full h-full max-h-[45vh] object-contain shadow-2xl">
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 5: Core Tech 02 -->
+        <section id="core-tech-02" class="snap-section bg-black flex flex-col justify-center pt-20 pb-10">
+            <div class="container mx-auto px-4 md:px-8 h-full flex flex-col items-center justify-center">
+                <div class="w-full max-w-4xl flex flex-col items-center flex-shrink-0">
+                    <span class="text-prism-mid font-black tracking-widest uppercase text-2xl md:text-3xl mb-2">02</span>
+                    <p class="text-white font-bold mb-6 text-xl md:text-2xl uppercase tracking-wide text-center">
+                        Fibroblast activation and ECM remodeling induced by hydrolyzed dECM
+                    </p>
+                    <p class="text-gray-400 font-light leading-relaxed text-base md:text-lg max-w-3xl text-left w-full">
+                        Hydrolyzed dECM activated fibroblasts and increased CTGF expression by approximately 2.8-fold, demonstrating a biological response associated with ECM remodeling.
+                    </p>
+                </div>
+                <div class="w-full relative flex-1 flex items-center justify-center mt-6 min-h-0 group">
+                    <div class="absolute inset-0 bg-gradient-to-b from-prism-mid to-prism-light rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                    <img src="https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/zoom_in_labeled_en.gif?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS96b29tX2luX2xhYmVsZWRfZW4uZ2lmIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4OTgxNzk3MSwiZXhwIjoyMTA1MTc3OTcxfQ.5oFf4afTAQ6q7GnVU3Jsy5XJnfDFnvXsPmJp-rC77HqatHCcnQkMNZo8iiyT-RtIwEVehfwAgVg4Q7lB-NtDww" alt="Technology 02" class="relative rounded-2xl w-full h-full max-h-[45vh] object-contain shadow-2xl">
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 6: Core Tech 03 -->
+        <section id="core-tech-03" class="snap-section bg-black flex flex-col justify-center pt-20 pb-10">
+            <div class="container mx-auto px-4 md:px-8 h-full flex flex-col items-center justify-center">
+                <div class="w-full max-w-4xl flex flex-col items-center flex-shrink-0">
+                    <span class="text-prism-deep font-black tracking-widest uppercase text-2xl md:text-3xl mb-2">03</span>
+                    <p class="text-white font-bold mb-6 text-xl md:text-2xl uppercase tracking-wide text-center">
+                        VEGF Upregulation observed with hydrolyzed dECM
+                    </p>
+                    <p class="text-gray-400 font-light leading-relaxed text-base md:text-lg max-w-3xl text-left w-full">
+                        Increased VEGF expression indicates a biological response associated with angiogenesis and the regenerative microenvironment.
+                    </p>
+                </div>
+                <div class="w-full relative flex-1 flex items-center justify-center mt-6 min-h-0 group">
+                    <div class="absolute inset-0 bg-gradient-to-b from-prism-deep to-prism-light rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                    <video autoplay loop muted playsinline class="relative rounded-2xl w-full h-full max-h-[45vh] object-contain shadow-2xl">
+                        <source src="https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/0919(1).mp4?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS8wOTE5KDEpLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODk4MTgwOTEsImV4cCI6MjEwNTE3ODA5MX0.Y_PkaGrmekj1GifKfcRWWKBLFGEUYfqYNdxPsqJUlF0pNE9j13RMCedLnEECEvX1-KKHqQzGMr3q3sfRzTeaHQ" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 7: Products Title -->
+        <section id="products-title" class="snap-section flex items-center justify-center">
+            <div class="absolute inset-0 w-full h-full z-0 bg-black">
+                <img src="https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/product.png?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS9wcm9kdWN0LnBuZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODk4MjMwNjAsImV4cCI6MjEwNTE4MzA2MH0._S-Lpgj_8PzMXTzCXlSEaNdN0mokzTu11N6fVHlWHNyslUaj26ZBvCP1LhAY_A2qlKchw7rFdIMYP7K0IDAStg" alt="Products Background" class="w-full h-full object-cover opacity-60">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/50 to-transparent"></div>
+            </div>
+            <div class="relative z-10 container mx-auto px-6 md:px-12 h-full flex flex-col justify-center items-center text-center">
+                <h2 class="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter text-white italic drop-shadow-2xl">
+                    Our <br class="md:hidden" /><span class="text-transparent bg-clip-text bg-gradient-to-r from-prism-light to-prism-mid">Products.</span>
+                </h2>
+            </div>
+        </section>
+
+        <!-- PAGE 8: Products 1 -->
+        <section id="products-1" class="snap-section flex items-center justify-center bg-gradient-to-br from-black via-[#1a1025] to-black relative">
+            <div class="absolute top-1/4 -right-20 w-96 h-96 bg-prism-mid/10 rounded-full blur-[100px]"></div>
+            <div class="container mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-12 relative z-10">
+                <div class="w-full md:w-1/2 flex flex-col justify-center">
+                    <h4 class="text-prism-light font-bold tracking-widest uppercase text-sm mb-4">Product Line 01</h4>
+                    <h2 class="text-4xl md:text-6xl font-black text-white mb-6">Regenerative<br>Skincare</h2>
+                    <p class="text-gray-400 text-lg leading-relaxed max-w-lg mb-8">
+                        Everyday cell regeneration. Infused with our proprietary h-dECM and PDRN complexes to reverse environmental damage and cellular aging from the comfort of your home.
+                    </p>
+                    <button class="w-max px-8 py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors">
+                        Explore Collection
+                    </button>
+                </div>
+                <div class="w-full md:w-1/2 flex justify-center">
+                    <div class="w-64 h-80 md:w-80 md:h-96 rounded-2xl border border-gray-700/50 bg-gradient-to-tr from-white/5 to-transparent flex items-center justify-center shadow-2xl backdrop-blur-sm">
+                        <span class="text-gray-500 text-sm tracking-widest">PRODUCT IMAGE 1</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 9: Products 2 -->
+        <section id="products-2" class="snap-section flex items-center justify-center bg-gradient-to-br from-black via-[#0d0a14] to-black relative">
+            <div class="absolute bottom-1/4 -left-20 w-96 h-96 bg-prism-deep/20 rounded-full blur-[100px]"></div>
+            <div class="container mx-auto px-6 md:px-12 flex flex-col md:flex-row-reverse items-center gap-12 relative z-10">
+                <div class="w-full md:w-1/2 flex flex-col justify-center md:items-end md:text-right">
+                    <h4 class="text-prism-mid font-bold tracking-widest uppercase text-sm mb-4">Product Line 02</h4>
+                    <h2 class="text-4xl md:text-6xl font-black text-white mb-6">Medical<br>Devices</h2>
+                    <p class="text-gray-400 text-lg leading-relaxed max-w-lg mb-8">
+                        Clinical grade solutions targeted for the treatment of intractable acne, melasma, and erythema. Exclusively available through dermatological clinics.
+                    </p>
+                    <button class="w-max px-8 py-3 border border-prism-mid text-white font-semibold rounded-full hover:bg-prism-mid/20 transition-colors">
+                        Clinical Data
+                    </button>
+                </div>
+                <div class="w-full md:w-1/2 flex justify-center">
+                    <div class="w-64 h-80 md:w-80 md:h-96 rounded-2xl border border-gray-700/50 bg-gradient-to-tr from-white/5 to-transparent flex items-center justify-center shadow-2xl backdrop-blur-sm">
+                        <span class="text-gray-500 text-sm tracking-widest">PRODUCT IMAGE 2</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 10: Partnerships -->
+        <section id="partnerships" class="snap-section flex items-center justify-center bg-black relative">
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-prism-deep/20 via-black to-black opacity-60"></div>
+            <div class="container mx-auto px-6 md:px-12 flex flex-col items-center text-center relative z-10">
+                <h2 class="text-5xl md:text-7xl font-black text-white italic drop-shadow-2xl mb-8">
+                    Shaping the Future <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-prism-mid to-white">Together.</span>
+                </h2>
+                <p class="text-gray-400 text-lg md:text-xl leading-relaxed max-w-3xl mb-12">
+                    We collaborate with leading research institutions, dermatology clinics, and global biotech innovators to accelerate the deployment of regenerative solutions worldwide.
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 w-full max-w-4xl opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                    <div class="flex items-center justify-center h-16 border-b border-gray-700 pb-4 text-xl font-bold tracking-widest text-white">LOGO 01</div>
+                    <div class="flex items-center justify-center h-16 border-b border-gray-700 pb-4 text-xl font-bold tracking-widest text-white">LOGO 02</div>
+                    <div class="flex items-center justify-center h-16 border-b border-gray-700 pb-4 text-xl font-bold tracking-widest text-white">LOGO 03</div>
+                    <div class="flex items-center justify-center h-16 border-b border-gray-700 pb-4 text-xl font-bold tracking-widest text-white">LOGO 04</div>
+                </div>
+                
+                <footer class="absolute bottom-8 text-center w-full text-xs text-gray-600 left-0">
+                    &copy; 2026 CellCeutix Inc. All rights reserved.
+                </footer>
+            </div>
+        </section>
+
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -213,21 +373,24 @@
             const iconClose = document.getElementById('icon-close');
             const mobileLinks = document.querySelectorAll('.mobile-link');
             const navbar = document.getElementById('navbar');
+            const snapContainer = document.querySelector('.snap-container');
+
+            // Handle Navbar Background on Scroll
+            snapContainer.addEventListener('scroll', () => {
+                if (snapContainer.scrollTop > 50) {
+                    navbar.classList.add('bg-black/80', 'backdrop-blur-md');
+                    navbar.classList.remove('bg-transparent');
+                } else {
+                    navbar.classList.remove('bg-black/80', 'backdrop-blur-md');
+                    navbar.classList.add('bg-transparent');
+                }
+            });
 
             // Toggle mobile menu
             mobileMenuBtn.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
                 iconMenu.classList.toggle('hidden');
                 iconClose.classList.toggle('hidden');
-                
-                // Add dark background to header when menu is open
-                if (!mobileMenu.classList.contains('hidden')) {
-                    navbar.classList.remove('bg-transparent');
-                    navbar.classList.add('bg-black/90', 'backdrop-blur-md');
-                } else {
-                    navbar.classList.add('bg-transparent');
-                    navbar.classList.remove('bg-black/90', 'backdrop-blur-md');
-                }
             });
 
             // Close mobile menu when a link is clicked
@@ -236,8 +399,6 @@
                     mobileMenu.classList.add('hidden');
                     iconMenu.classList.remove('hidden');
                     iconClose.classList.add('hidden');
-                    navbar.classList.add('bg-transparent');
-                    navbar.classList.remove('bg-black/90', 'backdrop-blur-md');
                 });
             });
 
@@ -245,13 +406,10 @@
             const elements = document.querySelectorAll('#typewriter-container [data-text]');
             let currentElementIndex = 0;
             let currentCharIndex = 0;
-            const typingSpeed = 120; // 타이핑 속도 대폭 늦춤
+            const typingSpeed = 100;
 
             function typeNextChar() {
-                // Check if all elements have finished typing
-                if (currentElementIndex >= elements.length) {
-                    return; 
-                }
+                if (currentElementIndex >= elements.length) return; 
 
                 const el = elements[currentElementIndex];
                 const text = el.getAttribute('data-text');
@@ -263,12 +421,10 @@
                 } else {
                     currentElementIndex++;
                     currentCharIndex = 0;
-                    // 문장 사이의 간격을 좀 더 여유롭게 주어 호흡을 늦춤
                     setTimeout(typeNextChar, typingSpeed + 400); 
                 }
             }
 
-            // Start typewriter after a short delay on initial load
             setTimeout(typeNextChar, 800);
         });
     </script>
