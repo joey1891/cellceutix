@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,8 +37,8 @@
             font-family: 'Montserrat', sans-serif;
             background-color: black;
             color: white;
-            /* Prevent scrolling as requested */
-            overflow: hidden; 
+            /* Prevent horizontal scroll, allow vertical scroll */
+            overflow-x: hidden; 
         }
         
         ::selection {
@@ -48,7 +48,7 @@
     </style>
 </head>
 
-<body class="h-screen w-screen m-0 p-0">
+<body class="m-0 p-0">
 
     <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-transparent py-6">
         <div class="container mx-auto px-6 md:px-12 flex justify-between items-center">
@@ -61,7 +61,7 @@
             <!-- Desktop Menu -->
             <nav class="hidden md:flex space-x-8">
                 <a href="#" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Brand Mission</a>
-                <a href="#" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Brand Vision</a>
+                <a href="#brand-vision" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Brand Vision</a>
                 <a href="#" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Core Technology</a>
                 <a href="#" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Products</a>
                 <a href="#" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">Partnerships</a>
@@ -87,7 +87,7 @@
         <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-black/95 border-t border-gray-800 py-4 backdrop-blur-md">
             <nav class="flex flex-col px-6 space-y-4">
                 <a href="#" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Brand Mission</a>
-                <a href="#" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Brand Vision</a>
+                <a href="#brand-vision" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Brand Vision</a>
                 <a href="#" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Core Technology</a>
                 <a href="#" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Products</a>
                 <a href="#" class="text-lg font-medium text-gray-300 hover:text-white mobile-link">Partnerships</a>
@@ -95,10 +95,10 @@
         </div>
     </header>
 
-    <main class="relative w-full h-full flex items-center justify-center overflow-hidden">
+    <main class="relative w-full h-screen flex items-center justify-center overflow-hidden">
         
         <!-- Background Video -->
-        <div class="absolute inset-0 w-full h-full z-0">
+        <div class="absolute inset-0 w-full h-full z-0 bg-black">
             <video 
                 autoplay 
                 loop 
@@ -110,7 +110,7 @@
                 Your browser does not support the video tag.
             </video>
             
-            <!-- Dark Gradient Overlay for text readability (Purple removed) -->
+            <!-- Dark Gradient Overlay for text readability -->
             <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
         </div>
 
@@ -133,6 +133,77 @@
             
         </div>
     </main>
+
+    <!-- Brand Vision Section -->
+    <section id="brand-vision" class="relative w-full min-h-screen flex items-center justify-center py-20">
+        <!-- Background Image -->
+        <div class="absolute inset-0 w-full h-full z-0 bg-black">
+            <img src="https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/eye%202026-09-19%20172119.png?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS9leWUgMjAyNi0wOS0xOSAxNzIxMTkucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4OTgwNjQ2NiwiZXhwIjoxOTQ3NDg2NDY2fQ.IEFGxCBqOuf6_wM1UdEKCaUYRLUVvOtVmAyKDU_qNFhUj8DU9UJy-NOs1CfofwU5d0UFmQ10YmCfyv9-HQ0UDA" alt="Brand Vision Background" class="w-full h-full object-cover opacity-75">
+            <!-- Simple Dark Gradient Overlay for text readability ONLY -->
+            <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/50 to-transparent"></div>
+        </div>
+
+        <!-- Content Container -->
+        <div class="relative z-10 container mx-auto px-6 md:px-12 h-full flex flex-col justify-center items-start">
+            
+            <!-- Main Copy -->
+            <h2 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-white italic mb-16 drop-shadow-2xl">
+                From Anti-aging to <br class="md:hidden" /><span class="text-transparent bg-clip-text bg-gradient-to-r from-prism-mid to-prism-light">Reverse Aging.</span>
+            </h2>
+
+            <!-- Timeline Roadmap -->
+            <div class="flex flex-col max-w-3xl mt-4">
+                
+                <!-- 2026 -->
+                <div class="flex group">
+                    <!-- Timeline Line & Dot -->
+                    <div class="flex flex-col items-center mr-6 md:mr-10">
+                        <div class="w-4 h-4 rounded-full bg-prism-light shadow-[0_0_15px_rgba(244,200,162,0.8)] mt-2 group-hover:scale-125 transition-transform duration-300"></div>
+                        <!-- Line -->
+                        <div class="w-px h-full bg-gray-600/50 mt-2"></div>
+                    </div>
+                    <!-- Content -->
+                    <div class="pb-12">
+                        <h3 class="text-3xl md:text-4xl font-bold text-prism-light mb-2 tracking-wide">2026</h3>
+                        <h4 class="text-xl md:text-2xl text-white font-semibold mb-3">Launch of the R2DN Line</h4>
+                        <p class="text-gray-400 font-light leading-relaxed text-sm md:text-base">
+                            Introducing regenerative creams, regenerative ampoules, mask packs, and acne patches based on our proprietary h-dECM and PDRN technology.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 2027 -->
+                <div class="flex group">
+                    <div class="flex flex-col items-center mr-6 md:mr-10">
+                        <div class="w-4 h-4 rounded-full bg-prism-mid shadow-[0_0_15px_rgba(168,130,212,0.8)] mt-2 group-hover:scale-125 transition-transform duration-300"></div>
+                        <div class="w-px h-full bg-gray-600/50 mt-2"></div>
+                    </div>
+                    <div class="pb-12">
+                        <h3 class="text-3xl md:text-4xl font-bold text-prism-mid mb-2 tracking-wide">2027</h3>
+                        <h4 class="text-xl md:text-2xl text-white font-semibold mb-3">Expansion of the R2DN Line</h4>
+                        <p class="text-gray-400 font-light leading-relaxed text-sm md:text-base">
+                            Launching innovative medical device products specifically targeted for the treatment of intractable acne, melasma, and erythema.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 2028 -->
+                <div class="flex group">
+                    <div class="flex flex-col items-center mr-6 md:mr-10">
+                        <div class="w-4 h-4 rounded-full bg-prism-deep shadow-[0_0_15px_rgba(75,48,117,0.8)] mt-2 group-hover:scale-125 transition-transform duration-300"></div>
+                    </div>
+                    <div class="pb-4">
+                        <h3 class="text-3xl md:text-4xl font-bold text-prism-deep mb-2 tracking-wide">2028</h3>
+                        <h4 class="text-xl md:text-2xl text-white font-semibold mb-3">R2DN Treatment Centers</h4>
+                        <p class="text-gray-400 font-light leading-relaxed text-sm md:text-base">
+                            Establishment of specialized procedure centers based on the R2DN product line and our advanced cellular regeneration protocols.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -174,12 +245,12 @@
             const elements = document.querySelectorAll('#typewriter-container [data-text]');
             let currentElementIndex = 0;
             let currentCharIndex = 0;
-            const typingSpeed = 120; // 타이핑 속도 대폭 늦춤 (기존 50 -> 120)
+            const typingSpeed = 120; // 타이핑 속도 대폭 늦춤
 
             function typeNextChar() {
                 // Check if all elements have finished typing
                 if (currentElementIndex >= elements.length) {
-                    return; // 설명글(Description) 페이드인 로직 삭제
+                    return; 
                 }
 
                 const el = elements[currentElementIndex];
