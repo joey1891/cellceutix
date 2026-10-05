@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Base Styles Provided */
         body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #111827; }
         .font-montserrat { font-family: 'Montserrat', sans-serif; }
 
@@ -22,56 +21,53 @@
         /* Main Content hidden initially */
         #main-content { display: none; opacity: 0; transition: opacity 0.5s ease; }
 
-        .table-container { 
-            border: 1px solid #e5e7eb;
-            border-radius: 0; 
-            max-height: 70vh; 
-            overflow-y: auto; 
-        }
-
-        .unified-table {
-            table-layout: fixed;
+        .flowchart-container {
             width: 100%;
-            min-width: 1200px;
+            overflow-x: auto;
+            background-color: #ffffff;
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
         }
-        .unified-table th, .unified-table td {
-            white-space: normal;
+        .flow-grid {
+            display: grid;
+            grid-template-columns: 80px 140px 100px 120px 120px 120px 120px 60px 100px 100px 120px 60px;
+            gap: 4px;
+            min-width: 1300px;
+            align-items: stretch;
+            font-size: 10px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .flow-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            min-height: 36px;
             word-break: keep-all;
-            overflow-wrap: break-word;
+            position: relative;
         }
-        .unified-table th { border: 1px solid #374151; }
-        .unified-table td { border: 1px solid #e5e7eb; }
-
-        .unified-table thead {
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            z-index: 20;
+        
+        .box-border { border: 1px solid #9ca3af; background-color: #ffffff; }
+        .box-navy { background-color: #113f67; color: white; font-weight: bold; }
+        .box-blue { background-color: #1e7ba8; color: white; font-weight: bold; }
+        .box-cyan { background-color: #00e5ff; color: #111827; font-weight: bold; }
+        .box-light-blue { background-color: #8ed6f7; color: #111827; font-weight: 600; }
+        .box-gray { background-color: #d1d5db; color: #111827; font-weight: 600; }
+        
+        /* Flow Lines */
+        .line-h { height: 1px; background-color: #9ca3af; width: 100%; align-self: center; }
+        .line-v { width: 1px; background-color: #9ca3af; height: 100%; justify-self: center; }
+        .arrow-right::after {
+            content: ''; position: absolute; right: -4px; top: 50%; transform: translateY(-50%);
+            border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-left: 4px solid #9ca3af;
         }
-        .unified-table thead th {
-            background-color: #111827; 
-            background-clip: padding-box;
-        }
 
-        .table-container::-webkit-scrollbar { width: 8px; height: 8px; }
-        .table-container::-webkit-scrollbar-track { background: #f8fafc; }
-        .table-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .table-container::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .header-text { font-weight: bold; font-size: 11px; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb; margin-bottom: 8px; }
 
-        .cosmetic-table tr.category-header td { border-left: none; border-right: none; border-top: none; border-bottom: 2px solid #111827 !important; }
-        .cosmetic-table tr.sub-category-header td { border-left: none; border-right: none; border-top: 1px solid #e5e7eb !important; border-bottom: 1px solid #e5e7eb !important; }
-        .cosmetic-table tr.type-header td { border-left: none; border-right: none; border-top: none; border-bottom: 1px solid #f3f4f6 !important; }
+        .vertical-text { writing-mode: vertical-rl; transform: rotate(180deg); margin: 0 auto; }
 
-        .unified-table tr.loading-row td { border: none; border-bottom: 1px solid #e5e7eb; }
-        .unified-table tr.note-row td { border-left: none; border-right: none; border-bottom: none; border-top: 1px solid #e5e7eb; }
-        .cosmetic-table tr:hover:not(.category-header):not(.sub-category-header):not(.type-header) { background-color: #f9fafb; transition: background-color 0.2s ease; }
-
-        .currency-cell { display: flex; justify-content: space-between; width: 100%; min-width: 65px; }
-        .product-img { width: 36px; height: 36px; object-fit: cover; border-radius: 4px; border: 1px solid #e5e7eb; }
-        .med-product-img { width: 44px; height: 44px; object-fit: contain; }
-        .placeholder-img { width: 36px; height: 36px; border-radius: 4px; background-color: #f3f4f6; border: 1px dashed #d1d5db; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 10px; font-weight: bold; }
-
-        /* Print Styles */
         .print-only, .print-only-cell, .print-only-inline { display: none; }
 
         @media print {
@@ -85,39 +81,273 @@
             .print-only-cell { display: table-cell !important; }
             .print-only-inline { display: inline !important; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-
-            .legal-contract { font-family: 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.6; color: #000; text-align: justify; max-width: 210mm; margin: 0 auto; padding: 20mm; }
-            .legal-contract h1 { font-size: 16pt; text-align: center; font-weight: bold; margin-bottom: 24pt; text-transform: uppercase; }
-            .legal-contract h2 { font-size: 12pt; font-weight: bold; margin-top: 18pt; margin-bottom: 6pt; }
-            .legal-contract h3 { font-size: 11pt; font-weight: bold; margin-top: 14pt; margin-bottom: 6pt; }
-            .legal-contract p { margin-bottom: 10pt; }
-            .legal-contract .clause { margin-left: 20pt; margin-bottom: 8pt; }
-            .legal-contract table { width: 100%; border-collapse: collapse; margin-top: 10pt; margin-bottom: 15pt; page-break-inside: avoid; }
-            .legal-contract th, .legal-contract td { border: 1px solid #000; padding: 6pt; text-align: left; }
-            .legal-contract th { background-color: #f0f0f0; font-weight: bold; }
             .page-break { page-break-before: always; }
         }
     </style>
 </head>
-<body class="antialiased selection:bg-blue-100 selection:text-blue-900" style="display: block; opacity: 1;"> <!-- Overriding #main-content logic for preview visibility -->
+<body class="antialiased selection:bg-blue-100 selection:text-blue-900" style="display: block; opacity: 1;"> 
 
-    <!-- Header -->
-    <header class="bg-white sticky top-0 z-40 border-b border-gray-200 nav-header">
+    <header class="bg-white sticky top-0 z-40 border-b border-gray-200 nav-header shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-5 flex justify-between items-center">
             <h1 class="font-montserrat text-lg md:text-2xl font-bold tracking-tight uppercase leading-snug">
                 MEDICAL AESTHETICS INDUSTRY
             </h1>
-            <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-600 uppercase tracking-wider font-montserrat">
+            <nav class="hidden md:flex space-x-6 text-sm font-medium text-gray-600 uppercase tracking-wider font-montserrat">
+                <a href="#trend" class="hover:text-blue-600 transition">TREND CHART</a>
                 <a href="#basics" class="hover:text-blue-600 transition">BOTOX / FILLER</a>
                 <a href="#boosters" class="hover:text-blue-600 transition">SKIN BOOSTERS</a>
-                <a href="#medifab" class="text-red-600 font-bold hover:text-red-700 transition">MEDIFAB PATENTED MATERIALS</a>
+                <a href="#ecm" class="hover:text-blue-600 transition">ECM</a>
+                <a href="#patented" class="text-red-600 font-bold hover:text-red-700 transition">PATENTED MATERIALS</a>
+                <a href="#faq" class="hover:text-gray-900 transition">FAQ</a>
             </nav>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10 space-y-12 md:space-y-16">
 
-        <!-- Basic Aesthetics (Toxin & HA) -->
+        <section id="trend" class="print-active-section">
+            <div class="mb-6 md:mb-8 flex items-center gap-3 md:gap-4">
+                <div class="w-6 md:w-8 h-1 bg-[#1e7ba8]"></div>
+                <h3 class="font-montserrat text-xl md:text-2xl font-bold uppercase tracking-wide">30-Year Trend (Skin Booster Market)</h3>
+            </div>
+            
+            <div class="flowchart-container rounded shadow-sm relative overflow-x-auto bg-white pb-6">
+                <!-- Top Header Info -->
+                <div class="flex gap-2 mb-4 text-[10px] items-stretch h-8 min-w-[1200px]">
+                    <div class="bg-[#113f67] text-white px-3 flex items-center font-bold whitespace-nowrap">Market Size</div>
+                    <div class="bg-[#e0f2fe] px-3 flex items-center flex-grow whitespace-nowrap">Korea: KRW 1 Tri / Global: KRW 20 Tri</div>
+                    <div class="bg-[#113f67] text-white px-3 flex items-center font-bold whitespace-nowrap">Market Characteristics</div>
+                    <div class="bg-[#e0f2fe] px-3 flex items-center flex-grow whitespace-nowrap">Fragmented aesthetics materials industry, Few synthetic Tech Companies (fewer than 200), High medical device licensing barriers</div>
+                </div>
+
+                <table class="w-full min-w-[1280px] border-separate text-center text-[10px] leading-snug" style="border-spacing: 4px;">
+                    <colgroup>
+                        <col style="width: 70px;">
+                        <col style="width: 120px;">
+                        <col style="width: 90px;">
+                        <col style="width: 100px;">
+                        <col style="width: 100px;">
+                        <col style="width: 100px;">
+                        <col style="width: 110px;">
+                        <col style="width: 50px;">
+                        <col style="width: 100px;">
+                        <col style="width: 80px;">
+                        <col style="width: 110px;">
+                        <col style="width: 85px;">
+                    </colgroup>
+                    <thead>
+                        <tr class="font-bold text-gray-700">
+                            <th></th>
+                            <th class="pb-2 border-b border-gray-300">Category</th>
+                            <th class="pb-2 border-b border-gray-300">Degradability</th>
+                            <th class="pb-2 border-b border-gray-300" colspan="3">Mechanism of Action</th>
+                            <th class="pb-2 border-b border-gray-300">Key Ingredients</th>
+                            <th class="pb-2 border-b border-gray-300">Entry year</th>
+                            <th class="pb-2 border-b border-gray-300">Market Size<br>KOR/GLOBAL</th>
+                            <th class="pb-2 border-b border-gray-300">Original Tech<br>Companies</th>
+                            <th class="pb-2 border-b border-gray-300">Major<br>Companies</th>
+                            <th class="pb-2 border-b border-gray-300">Trend Shift<br>2023</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Row 1: Botulinum Toxin -->
+                        <tr>
+                            <td rowspan="7" class="bg-[#1e7ba8] text-white font-bold align-middle rounded-sm shadow-sm py-4">Immediate</td>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Wrinkle / Contour<br>Improvement</td>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Biodegradable</td>
+                            <td colspan="3" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle relative">Nerve Signal Blocking<div class="absolute -right-[6px] top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></td>
+                            <td class="border border-gray-400 bg-gray-50 font-bold rounded-sm px-1 py-1.5 align-middle">Botulinum Toxin</td>
+                            <td class="px-1 py-1.5 align-middle">2002</td>
+                            <td class="px-1 py-1.5 align-middle">0.25 Tri/7 Tri</td>
+                            <td class="px-1 py-1.5 align-middle">Approx. 20</td>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Allergan</td>
+                            <td rowspan="18" class="p-0 align-middle relative">
+                                <div class="absolute inset-0 bg-[#113f67] rounded-sm flex flex-col items-center py-4 text-white">
+                                    <div class="text-[9px] mb-2 uppercase opacity-80 leading-tight font-bold text-center">Trend Shift<br>2023<br>Before/After</div>
+                                    <div class="flex-grow flex flex-col w-full relative h-full justify-around items-center">
+                                        <div class="absolute left-1/2 -ml-2 top-2 bottom-1/2 w-4 bg-[#008080] opacity-80 rounded-t-full" style="clip-path: polygon(50% 100%, 0 0, 100% 0);"></div>
+                                        <div class="absolute left-1/2 -ml-2 top-1/2 bottom-2 w-4 bg-[#1e7ba8] opacity-80 rounded-b-full transform rotate-180" style="clip-path: polygon(50% 100%, 0 0, 100% 0);"></div>
+                                        <span class="vertical-text inline-block whitespace-normal text-[10px] z-10 px-1 tracking-wider font-bold text-center" style="max-height: 160px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); line-height: 1.4;">Preference for immediate visible effects</span>
+                                        <span class="vertical-text inline-block whitespace-normal text-[10px] z-10 px-1 tracking-wider font-bold text-center" style="max-height: 240px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); line-height: 1.4;">Prioritizing solutions that fundamentally resolve root causes over time</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Row 2: Silicone -->
+                        <tr>
+                            <td rowspan="3" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Simple Volume<br>Enhancement</td>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Non-<br>Biodegradable</td>
+                            <td colspan="3" class="relative"><div class="absolute inset-0 flex items-center"><div class="w-full h-[1px] bg-gray-400"></div><div class="absolute right-0 top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></div></td>
+                            <td class="border border-gray-400 bg-gray-200 font-bold text-gray-800 rounded-sm px-1 py-1.5 align-middle">Silicone</td>
+                            <td class="px-1 py-1.5 align-middle">1976</td>
+                            <td class="px-1 py-1.5 align-middle text-transparent">.</td>
+                            <td rowspan="4" class="px-1 py-1.5 align-middle">100 +</td>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Dowcorning</td>
+                        </tr>
+                        <!-- Row 3: HA Filler -->
+                        <tr>
+                            <td rowspan="2" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Biodegradable</td>
+                            <td colspan="3" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle relative">Crosslinked<div class="absolute -right-[6px] top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></td>
+                            <td class="border border-gray-400 bg-gray-50 font-bold rounded-sm px-1 py-1.5 align-middle">HA Filler</td>
+                            <td class="px-1 py-1.5 align-middle">1996</td>
+                            <td class="px-1 py-1.5 align-middle">0.2 Tri / 6 Tri</td>
+                            <td rowspan="2" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Galderma</td>
+                        </tr>
+                        <!-- Row 4: HA Skin Booster -->
+                        <tr>
+                            <td colspan="3" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle relative">Non/Low-crosslinked<div class="absolute -right-[6px] top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></td>
+                            <td class="border border-gray-400 bg-gray-50 font-bold rounded-sm px-1 py-1.5 align-middle">HA Skin Booster</td>
+                            <td class="px-1 py-1.5 align-middle">2004</td>
+                            <td class="px-1 py-1.5 align-middle text-transparent">.</td>
+                        </tr>
+                        <!-- Row 5: Collagen Filler 1981 -->
+                        <tr>
+                            <td rowspan="3" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Collagen Density<br>Replenishment</td>
+                            <td rowspan="3" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Biodegradable</td>
+                            <td colspan="3" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle relative">Heterogeneous collagen<div class="absolute -right-[6px] top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></td>
+                            <td class="border border-gray-400 bg-gray-200 font-bold text-gray-800 rounded-sm px-1 py-1.5 align-middle">Collagen Filler</td>
+                            <td class="px-1 py-1.5 align-middle">1981</td>
+                            <td class="px-1 py-1.5 align-middle text-transparent">.</td>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Allergan</td>
+                        </tr>
+                        <!-- Row 6: Collagen Filler 2024 -->
+                        <tr>
+                            <td rowspan="2" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Homogeneous<br>collagen</td>
+                            <td colspan="2" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle relative">Extraction / Process<div class="absolute -right-[6px] top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></td>
+                            <td class="border border-transparent bg-[#8ed6f7] font-bold text-gray-900 rounded-sm px-1 py-1.5 align-middle">Collagen Filler</td>
+                            <td class="px-1 py-1.5 align-middle">2024</td>
+                            <td class="px-1 py-1.5 align-middle">0.02 Tri</td>
+                            <td class="px-1 py-1.5 align-middle">3</td>
+                            <td class="border border-transparent bg-[#8ed6f7] font-bold text-gray-900 rounded-sm px-1 py-1.5 align-middle">L&C Bio</td>
+                        </tr>
+                        <!-- Row 7: Collagen Filler X (BioPlus Removed) -->
+                        <tr>
+                            <td colspan="2" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle relative">Genetic Recombinant<div class="absolute -right-[6px] top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></td>
+                            <td class="border border-transparent bg-[#8ed6f7] font-bold text-gray-900 rounded-sm px-1 py-1.5 align-middle">Collagen Filler</td>
+                            <td class="px-1 py-1.5 align-middle">X</td>
+                            <td class="px-1 py-1.5 align-middle text-transparent">.</td>
+                            <td class="px-1 py-1.5 align-middle text-transparent">.</td>
+                            <td class="px-1 py-1.5 align-middle text-transparent">.</td>
+                        </tr>
+                        <!-- Divider Row -->
+                        <tr>
+                            <td colspan="12" class="py-2"><div class="border-t-2 border-dashed border-red-500 w-full"></div></td>
+                        </tr>
+                        <!-- Row 8: PMMA -->
+                        <tr>
+                            <td rowspan="10" class="bg-[#113f67] text-white font-bold align-middle rounded-sm shadow-sm py-4">Fundamental</td>
+                            <td rowspan="6" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Collagen<br>Synthesis</td>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Non-<br>Biodegradable</td>
+                            <td colspan="3" class="relative"><div class="absolute inset-0 flex items-center"><div class="w-full h-[1px] bg-gray-400"></div><div class="absolute right-0 top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></div></td>
+                            <td class="border border-gray-400 bg-gray-200 font-bold text-gray-800 rounded-sm px-1 py-1.5 align-middle">PMMA</td>
+                            <td class="px-1 py-1.5 align-middle">1994</td>
+                            <td class="px-1 py-1.5 align-middle text-transparent">.</td>
+                            <td class="px-1 py-1.5 align-middle">Approx. 5</td>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Suneva Medical</td>
+                        </tr>
+                        <!-- Row 9: PDLLA -->
+                        <tr>
+                            <td rowspan="5" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Biodegradable</td>
+                            <td rowspan="4" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">
+                                <div class="font-bold border-b border-gray-300 pb-1 mb-1">Inflammation O</div>
+                                <div class="text-[8px] text-gray-600 leading-tight flex flex-col items-center">
+                                    <span>Macrophage<br>Recruitment</span>
+                                    <span class="text-[7px]">▼</span>
+                                    <span>Cytokine Secretion</span>
+                                    <span class="text-[7px]">▼</span>
+                                    <span>Fibroblast Activation</span>
+                                    <span class="text-[7px]">▼</span>
+                                    <span>Collagen Production</span>
+                                </div>
+                            </td>
+                            <td rowspan="2" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Low Duration</td>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle relative">Tensile Force X<div class="absolute -right-[6px] top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></td>
+                            <td class="border border-transparent bg-[#8ed6f7] font-bold text-gray-900 rounded-sm px-1 py-1.5 align-middle">PDLLA</td>
+                            <td class="px-1 py-1.5 align-middle">2014</td>
+                            <td class="px-1 py-1.5 align-middle">0.05 Tri/0.05 Tri</td>
+                            <td class="px-1 py-1.5 align-middle">3</td>
+                            <td class="border border-transparent bg-[#8ed6f7] font-bold text-gray-900 rounded-sm px-1 py-1.5 align-middle">VAIM</td>
+                        </tr>
+                        <!-- Row 10: PDO -->
+                        <tr>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle relative">Tensile Force O<div class="absolute -right-[6px] top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></td>
+                            <td class="border border-transparent bg-[#8ed6f7] font-bold text-gray-900 rounded-sm px-1 py-1.5 align-middle">PDO</td>
+                            <td class="px-1 py-1.5 align-middle">2020</td>
+                            <td class="px-1 py-1.5 align-middle">0.02 Tri</td>
+                            <td class="px-1 py-1.5 align-middle">2</td>
+                            <td class="border border-transparent bg-[#8ed6f7] font-bold text-gray-900 rounded-sm px-1 py-1.5 align-middle">Ultra V</td>
+                        </tr>
+                        <!-- Row 11: PLLA -->
+                        <tr>
+                            <td colspan="2" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle relative">Medium Duration<div class="absolute -right-[6px] top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></td>
+                            <td class="border border-gray-400 bg-gray-50 font-bold rounded-sm px-1 py-1.5 align-middle">PLLA</td>
+                            <td class="px-1 py-1.5 align-middle">1999</td>
+                            <td class="px-1 py-1.5 align-middle">0.1 Tri/2 Tri</td>
+                            <td class="px-1 py-1.5 align-middle">Approx. 15</td>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Galderma</td>
+                        </tr>
+                        <!-- Row 12: PCL -->
+                        <tr>
+                            <td colspan="2" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle relative">High Duration<div class="absolute -right-[6px] top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></td>
+                            <td class="border border-gray-400 bg-gray-50 font-bold rounded-sm px-1 py-1.5 align-middle">PCL</td>
+                            <td class="px-1 py-1.5 align-middle">2009</td>
+                            <td class="px-1 py-1.5 align-middle">0.1 Tri/1 Tri</td>
+                            <td class="px-1 py-1.5 align-middle">Approx. 5</td>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Sinclair</td>
+                        </tr>
+                        <!-- Row 13: CaHA -->
+                        <tr>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Inflammation X</td>
+                            <td colspan="2" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle relative">High Duration<div class="absolute -right-[6px] top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></td>
+                            <td class="border border-gray-400 bg-gray-50 font-bold rounded-sm px-1 py-1.5 align-middle">CaHA</td>
+                            <td class="px-1 py-1.5 align-middle">2003</td>
+                            <td class="px-1 py-1.5 align-middle">0.05/1Tri</td>
+                            <td class="px-1 py-1.5 align-middle">Approx. 5</td>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Merz</td>
+                        </tr>
+                        <!-- Row 14: PDRN -->
+                        <tr>
+                            <td rowspan="4" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Cell Regeneration</td>
+                            <td rowspan="4" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Biodegradable</td>
+                            <td rowspan="4" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Inflammation X</td>
+                            <td rowspan="2" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Simple Cellular<br>Signaling</td>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle relative">Low Molecular<div class="absolute -right-[6px] top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></td>
+                            <td class="border border-transparent bg-[#8ed6f7] font-bold text-gray-900 rounded-sm px-1 py-1.5 align-middle">PDRN</td>
+                            <td class="px-1 py-1.5 align-middle">2008</td>
+                            <td rowspan="2" class="px-1 py-1.5 align-middle">0.25 Tri/0.3 Tri</td>
+                            <td rowspan="2" class="px-1 py-1.5 align-middle">Approx. 10</td>
+                            <td rowspan="2" class="border border-transparent bg-[#8ed6f7] font-bold text-gray-900 rounded-sm px-1 py-1.5 align-middle">Pharma<br>Research</td>
+                        </tr>
+                        <!-- Row 15: PN -->
+                        <tr>
+                            <td class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle relative">High Molecular<div class="absolute -right-[6px] top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></td>
+                            <td class="border border-gray-400 bg-gray-50 font-bold rounded-sm px-1 py-1.5 align-middle">PN</td>
+                            <td class="px-1 py-1.5 align-middle">2014</td>
+                        </tr>
+                        <!-- Row 16: Exosome -->
+                        <tr>
+                            <td rowspan="2" class="border border-gray-400 bg-white rounded-sm px-1 py-1.5 align-middle">Complex Cellular<br>Signaling</td>
+                            <td class="relative"><div class="absolute inset-0 flex items-center"><div class="w-full h-[1px] bg-gray-400"></div><div class="absolute right-0 top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></div></td>
+                            <td class="border border-transparent bg-[#8ed6f7] font-bold text-gray-900 rounded-sm px-1 py-1.5 align-middle">Exosome</td>
+                            <td class="px-1 py-1.5 align-middle">X</td>
+                            <td class="px-1 py-1.5 align-middle">0.05 Tri/2.5 Tri</td>
+                            <td class="px-1 py-1.5 align-middle">Approx. 15</td>
+                            <td class="border border-transparent bg-[#8ed6f7] font-bold text-gray-900 rounded-sm px-1 py-1.5 align-middle">ExoCoBio</td>
+                        </tr>
+                        <!-- Row 17: Complex Growth Factors (BioPlus Removed) -->
+                        <tr>
+                            <td class="relative"><div class="absolute inset-0 flex items-center"><div class="w-full h-[1px] bg-gray-400"></div><div class="absolute right-0 top-1/2 transform -translate-y-1/2 border-y-[4px] border-y-transparent border-l-[4px] border-l-gray-400"></div></div></td>
+                            <td class="border border-transparent bg-[#8ed6f7] font-bold text-gray-900 rounded-sm px-1 py-1.5 align-middle">Complex Growth<br>Factors</td>
+                            <td class="px-1 py-1.5 align-middle">X</td>
+                            <td class="px-1 py-1.5 align-middle text-transparent">.</td>
+                            <td class="px-1 py-1.5 align-middle text-transparent">.</td>
+                            <td class="px-1 py-1.5 align-middle text-transparent">.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
         <section id="basics" class="print-active-section">
             <div class="mb-6 md:mb-8 flex items-center gap-3 md:gap-4">
                 <div class="w-6 md:w-8 h-1 bg-blue-600"></div>
@@ -172,7 +402,6 @@
             </div>
         </section>
 
-        <!-- Skin Boosters (Polymers) -->
         <section id="boosters" class="print-active-section">
             <div class="mb-6 md:mb-8 flex items-center gap-3 md:gap-4">
                 <div class="w-6 md:w-8 h-1 bg-blue-600"></div>
@@ -268,11 +497,57 @@
             </div>
         </section>
 
-        <!-- Medifab Specialized Section -->
-        <section id="medifab" class="print-active-section">
+        <section id="ecm" class="print-active-section">
+            <div class="mb-6 md:mb-8 flex items-center gap-3 md:gap-4">
+                <div class="w-6 md:w-8 h-1 bg-blue-600"></div>
+                <h3 class="font-montserrat text-xl md:text-2xl font-bold uppercase tracking-wide">ECM (Extracellular Matrix)</h3>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-6">
+                <div class="bg-white p-6 md:p-8 rounded-none border border-gray-200 hover:border-gray-300 transition duration-200 flex flex-col md:flex-row gap-6 md:items-center">
+                    <div class="flex-1">
+                        <h4 class="font-montserrat text-lg md:text-xl font-bold mb-3 uppercase">ECM Modulators</h4>
+                        <p class="text-sm leading-relaxed opacity-90 mb-6 text-gray-700">
+                            Extracellular Matrix (ECM) provides the essential structural and biochemical support to surrounding cells. By injecting or stimulating ECM components directly, these advanced therapies promote tissue regeneration, improve cellular environments, and fundamentally restore skin elasticity and overall health.
+                        </p>
+                        <div class="inline-flex flex-col gap-3">
+                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Mechanism of Action</span>
+                            <a href="https://www.youtube.com/watch?v=YxSmpiokJO4&t=69s" target="_blank" class="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-xs font-bold uppercase tracking-wider transition w-full sm:w-auto shadow-sm">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                                Watch Mechanism Video
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hidden md:flex w-1/3 justify-center items-center opacity-10">
+                        <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-none border border-gray-200 hover:border-gray-300 transition duration-200 flex flex-col md:flex-row gap-6 md:items-center">
+                    <div class="flex-1">
+                        <h4 class="font-montserrat text-lg md:text-xl font-bold mb-3 uppercase">Allogeneic vs. Porcine ECM</h4>
+                        <p class="text-sm leading-relaxed opacity-90 mb-6 text-gray-700">
+                            Understanding the source of ECM materials is crucial. This video explains the differences between allogeneic (human-derived) and porcine (pig-derived) ECM, highlighting the specific advantages and rationale for utilizing porcine ECM in regenerative aesthetics.
+                        </p>
+                        <div class="inline-flex flex-col gap-3 mt-auto">
+                             <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Source Comparison</span>
+                            <a href="https://www.youtube.com/watch?v=T4BvGjE41Io&t=27s" target="_blank" class="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-xs font-bold uppercase tracking-wider transition w-full sm:w-auto shadow-sm">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                                Watch Comparison Video
+                            </a>
+                        </div>
+                    </div>
+                     <div class="hidden md:flex w-1/3 justify-center items-center opacity-10">
+                        <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="patented" class="print-active-section">
             <div class="mb-6 md:mb-8 flex items-center gap-3 md:gap-4">
                 <div class="w-6 md:w-8 h-1 bg-red-600"></div>
-                <h3 class="font-montserrat text-xl md:text-2xl font-bold uppercase tracking-wide">MEDIFAB PATENTED MATERIALS</h3>
+                <h3 class="font-montserrat text-xl md:text-2xl font-bold uppercase tracking-wide">PATENTED MATERIALS</h3>
             </div>
             
             <div class="bg-white p-5 md:p-8 rounded-none border border-gray-200 relative overflow-hidden">
@@ -280,9 +555,9 @@
                     <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-6 md:mb-8">
                         <div>
                             <span class="inline-block bg-red-600 text-white text-[10px] md:text-xs font-bold px-3 py-1 mb-2 tracking-widest uppercase">Proprietary Technology</span>
-                            <h2 class="font-montserrat text-2xl md:text-3xl font-bold tracking-tight uppercase leading-snug">MEDIFAB<br class="sm:hidden"> PATENTED MATERIALS</h2>
+                            <h2 class="font-montserrat text-2xl md:text-3xl font-bold tracking-tight uppercase leading-snug">PATENTED<br class="sm:hidden"> MATERIALS</h2>
                         </div>
-                        <a href="https://www.youtube.com/watch?v=zToScW5PM_g&t=6s" target="_blank" class="sm:ml-auto inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 md:py-2 text-xs font-bold uppercase tracking-wider transition w-full sm:w-auto mt-2 sm:mt-0">Corporate Briefing Video</a>
+                        <a href="https://www.youtube.com/watch?v=zToScW5PM_g&t=6s" target="_blank" class="sm:ml-auto inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 md:py-2 text-xs font-bold uppercase tracking-wider transition w-full sm:w-auto mt-2 sm:mt-0 shadow-sm">Corporate Briefing Video</a>
                     </div>
 
                     <div class="grid lg:grid-cols-3 gap-5 md:gap-6">
@@ -321,6 +596,32 @@
                                 <a href="https://www.youtube.com/shorts/M-IO69et3zE" target="_blank" class="inline-flex items-center justify-center bg-white hover:bg-gray-50 text-[#111827] border border-gray-300 px-4 py-2 text-xs font-medium transition w-full sm:w-auto sm:justify-start">Supercritical CO2 Process</a>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="print-active-section">
+            <div class="mb-6 md:mb-8 flex items-center gap-3 md:gap-4">
+                <div class="w-6 md:w-8 h-1 bg-gray-800"></div>
+                <h3 class="font-montserrat text-xl md:text-2xl font-bold uppercase tracking-wide">FAQ</h3>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="bg-white p-5 md:p-6 rounded-none border border-gray-200 hover:border-gray-300 transition duration-200">
+                    <h4 class="font-bold text-base md:text-lg text-gray-900 mb-3 flex items-start gap-3">
+                        <span class="text-blue-600 font-montserrat text-xl">Q.</span>
+                        Can molecules exceeding 500 Daltons be absorbed into the dermis?
+                    </h4>
+                    <div class="pl-8 sm:pl-9 mt-3 border-t border-gray-100 pt-4">
+                        <p class="text-sm leading-relaxed opacity-90 mb-5 text-gray-700">
+                            Detailed explanations regarding this question and the skin absorption mechanism (the 500 Dalton Rule) can be found in the answer video below.
+                        </p>
+                        <a href="https://www.youtube.com/watch?v=xnU0HmNPtM8" target="_blank" class="inline-flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-[#111827] border border-gray-300 px-5 py-2.5 text-xs font-bold uppercase tracking-wider transition shadow-sm w-full sm:w-auto">
+                            <svg class="w-4 h-4 mr-2 text-red-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                            Watch Answer Video
+                        </a>
                     </div>
                 </div>
             </div>
