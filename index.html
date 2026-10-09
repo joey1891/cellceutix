@@ -1,9 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" style="scroll-behavior: smooth;">
+<html lang="ko" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CellCeutix - Biotech Skincare</title>
+
+    <!-- 검색 엔진 최적화 (SEO) 및 사이트 설명 -->
+    <meta name="description" content="바이오테크 스킨케어 CellCeutix. 독자적인 h-dECM 및 PDRN 기술 기반의 차세대 안티에이징 스킨케어 솔루션을 제공합니다.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://cellceutix.kr/">
+
+    <!-- Open Graph 메타 태그 (네이버, 카카오톡, 페이스북 공유 시 노출) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CellCeutix">
+    <meta property="og:title" content="CellCeutix - Biotech Skincare">
+    <meta property="og:description" content="바이오테크 스킨케어 CellCeutix. 독자적인 h-dECM 및 PDRN 기술 기반의 차세대 안티에이징 스킨케어 솔루션을 제공합니다.">
+    <meta property="og:url" content="https://cellceutix.kr/">
+    <meta property="og:image" content="https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/product.png?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS9wcm9kdWN0LnBuZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODk4MjMwNjAsImV4cCI6MjEwNTE4MzA2MH0._S-Lpgj_8PzMXTzCXlSEaNdN0mokzTu11N6fVHlWHNyslUaj26ZBvCP1LhAY_A2qlKchw7rFdIMYP7K0IDAStg">
+
+    <!-- Twitter Card 메타 태그 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CellCeutix - Biotech Skincare">
+    <meta name="twitter:description" content="바이오테크 스킨케어 CellCeutix. 독자적인 h-dECM 및 PDRN 기술 기반의 차세대 안티에이징 스킨케어 솔루션을 제공합니다.">
+    <meta name="twitter:image" content="https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/product.png?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS9wcm9kdWN0LnBuZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODk4MjMwNjAsImV4cCI6MjEwNTE4MzA2MH0._S-Lpgj_8PzMXTzCXlSEaNdN0mokzTu11N6fVHlWHNyslUaj26ZBvCP1LhAY_A2qlKchw7rFdIMYP7K0IDAStg">
     
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -464,17 +483,14 @@
                     if (!isExpanded) {
                         affiliatedMenuDropdown.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
                         affiliatedMenuDropdown.classList.add('opacity-100', 'translate-y-0');
-                        // Change plus to minus icon
                         affiliatedMenuIcon.innerHTML = '<path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />';
                     } else {
                         affiliatedMenuDropdown.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
                         affiliatedMenuDropdown.classList.remove('opacity-100', 'translate-y-0');
-                        // Revert to plus icon
                         affiliatedMenuIcon.innerHTML = '<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />';
                     }
                 });
 
-                // Close dropdown when clicking outside
                 document.addEventListener('click', (event) => {
                     if (!affiliatedMenuBtn.contains(event.target) && !affiliatedMenuDropdown.contains(event.target)) {
                         affiliatedMenuBtn.setAttribute('aria-expanded', 'false');
@@ -539,7 +555,7 @@
             // Intersection Observer for Dot Navigation
             const observerOptions = {
                 root: snapContainer,
-                threshold: 0.5 // Trigger when 50% of the section is visible
+                threshold: 0.5
             };
 
             const observer = new IntersectionObserver((entries) => {
@@ -549,13 +565,9 @@
                         const indexAttr = entry.target.getAttribute('data-index');
 
                         if (sectionType === 'tech' || sectionType === 'prod') {
-                            // Show the side nav
                             sideNav.classList.remove('opacity-0', 'pointer-events-none');
-                            
-                            // Determine how many dots to show based on section type
                             const count = sectionType === 'tech' ? 3 : 2;
                             
-                            // Adjust the number of visible dots
                             dotNavItems.forEach((dot, idx) => {
                                 if(idx < count) {
                                     dot.style.display = 'block';
@@ -564,10 +576,8 @@
                                 }
                             });
 
-                            // Remove active class from all dots
                             dotNavItems.forEach(dot => dot.classList.remove('active'));
                             
-                            // Add active class to the current dot
                             if (indexAttr !== null) {
                                 const index = parseInt(indexAttr, 10);
                                 if (dotNavItems[index]) {
@@ -575,7 +585,6 @@
                                 }
                             }
                         } else {
-                            // Hide the side nav for other sections (intro, titles)
                             sideNav.classList.add('opacity-0', 'pointer-events-none');
                         }
                     }
@@ -586,10 +595,9 @@
                 observer.observe(section);
             });
             
-            // Allow clicking dots to navigate (optional enhancement)
+            // Dot click navigation
             dotNavItems.forEach((dot, index) => {
                dot.addEventListener('click', () => {
-                   // Find the currently visible relevant section group to scroll within
                    const currentVisible = Array.from(sections).find(s => {
                        const rect = s.getBoundingClientRect();
                        return rect.top >= 0 && rect.top < window.innerHeight;
