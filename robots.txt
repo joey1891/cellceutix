@@ -1,2 +1,10 @@
 User-agent: *
-Allow:
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+Sitemap: https://cellceutix.kr/sitemap.xml
