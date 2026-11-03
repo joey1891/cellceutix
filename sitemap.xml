@@ -6,14 +6,62 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
+      <image:loc>https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/product.png?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS9wcm9kdWN0LnBuZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODk4MjMwNjAsImV4cCI6MjEwNTE4MzA2MH0._S-Lpgj_8PzMXTzCXlSEaNdN0mokzTu11N6fVHlWHNyslUaj26ZBvCP1LhAY_A2qlKchw7rFdIMYP7K0IDAStg</image:loc>
+      <image:title>셀슈틱스 리투디엔 더마플라스트 제품 라인</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cellceutix.kr/about.html</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cellceutix.kr/technology.html</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cellceutix.kr/products/</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://cellceutix.kr/products/ampoule.html</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
       <image:loc>https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/CellCeutix_Re2DN%20ampoule.png?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS9DZWxsQ2V1dGl4X1JlMkROIGFtcG91bGUucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MzcxODYyOCwiZXhwIjoyMTA5MDc4NjI4fQ.egyyHUk8Usx1gRLpHw4Sn7EPbZYKbKJ9OdoZ02QBvT9BkKMBxlzLpksZ3Nlr78PvahdqizQIf52JaEzAtylGgg</image:loc>
-      <image:title>셀슈틱스 리투디엔 더마플라스트 앰플 Re2DN Dermaplast Ampoule</image:title>
+      <image:title>셀슈틱스 리투디엔 더마플라스트 앰플</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cellceutix.kr/products/cream.html</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/KakaoTalk_20260920_164950932_01.jpg?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS9LYWthb1RhbGtfMjAyNjA5MjBfMTY0OTUwOTMyXzAxLmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODk4OTI3MzEsImV4cCI6MjEwNTI1MjczMX0.2kqpMQjycMN3HxY9srlqeNJjgFdBoXh5laHxr8Y4V35RWD1c8o6_yGtW8m1kvyZ7FbJQFSpOx8PFr0lzC9vpZg</image:loc>
+      <image:title>셀슈틱스 리투디엔 더마플라스트 크림</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cellceutix.kr/products/lipbalm.html</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/KakaoTalk_20260920_164950932.jpg?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS9LYWthb1RhbGtfMjAyNjA5MjBfMTY0OTUwOTMyLmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODk4OTI3MTYsImV4cCI6MjEwNTI1MjcxNn0.KzErSK3A-ZOff3avFwlH1kZcFoiJ8sgnedC6rSCKhVx22OExDESogCjARjtBsHKHM5R4pNye5uB6Lv21kj-hgg</image:loc>
+      <image:title>셀슈틱스 리투디엔 더마플라스트 립밤</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://cellceutix.kr/MedicalAesthetics.html</loc>
     <lastmod>2026-11-04</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
 </urlset>
