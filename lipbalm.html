@@ -207,17 +207,48 @@
                 radial-gradient(ellipse 50% 40% at 85% 15%, rgba(244,200,162,0.10), transparent 70%),
                 linear-gradient(180deg, #171026 0%, #251a39 55%, #1a1229 100%);
         }
-        .tone-prod-a {
-            background:
-                radial-gradient(ellipse 55% 60% at 75% 50%, rgba(168,130,212,0.34), transparent 70%),
-                radial-gradient(ellipse 45% 45% at 15% 80%, rgba(244,200,162,0.12), transparent 70%),
-                linear-gradient(135deg, #1c1430 0%, #33224f 50%, #1e1530 100%);
+        /* ===== Product backgrounds: antique gallery patterns ===== */
+        .tone-prod-a, .tone-prod-b, .tone-prod-c { isolation: isolate; }
+        .tone-prod-a::before, .tone-prod-b::before, .tone-prod-c::before {
+            content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+            background-image: var(--pattern); background-size: var(--pattern-size);
+            opacity: 0.16;
+            -webkit-mask-image: radial-gradient(ellipse 75% 85% at var(--mask-x) 50%, transparent 25%, #000 85%);
+                    mask-image: radial-gradient(ellipse 75% 85% at var(--mask-x) 50%, transparent 25%, #000 85%);
         }
-        .tone-prod-b {
+        /* gallery double gold frame */
+        .tone-prod-a::after, .tone-prod-b::after, .tone-prod-c::after {
+            content: ""; position: absolute; inset: 22px; z-index: 0; pointer-events: none;
+            border: 1px solid rgba(198,164,106,0.32);
+            outline: 1px solid rgba(198,164,106,0.14); outline-offset: 7px;
+        }
+        @media (max-width: 767px) {
+            .tone-prod-a::after, .tone-prod-b::after, .tone-prod-c::after { inset: 12px; outline-offset: 4px; }
+        }
+
+        /* Ampoule: aubergine velvet + art-deco fan */
+        .tone-prod-a {
+            --pattern: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='96' height='48' viewBox='0 0 96 48'><g fill='none' stroke='%23c6a46a' stroke-width='0.9'><path d='M0 48a48 48 0 0 1 96 0'/><path d='M12 48a36 36 0 0 1 72 0'/><path d='M24 48a24 24 0 0 1 48 0'/><path d='M36 48a12 12 0 0 1 24 0'/><path d='M-48 24a48 48 0 0 1 96 0'/><path d='M-36 24a36 36 0 0 1 72 0'/><path d='M-24 24a24 24 0 0 1 48 0'/><path d='M-12 24a12 12 0 0 1 24 0'/><path d='M48 24a48 48 0 0 1 96 0'/><path d='M60 24a36 36 0 0 1 72 0'/><path d='M72 24a24 24 0 0 1 48 0'/><path d='M84 24a12 12 0 0 1 24 0'/></g></svg>"); --pattern-size: 96px 48px; --mask-x: 30%;
             background:
-                radial-gradient(ellipse 55% 60% at 25% 50%, rgba(168,130,212,0.32), transparent 70%),
-                radial-gradient(ellipse 45% 45% at 85% 20%, rgba(244,200,162,0.12), transparent 70%),
-                linear-gradient(135deg, #1e1530 0%, #2e2048 50%, #1a1229 100%);
+                radial-gradient(ellipse 40% 55% at 72% 45%, rgba(214,182,128,0.22), transparent 70%),
+                radial-gradient(ellipse 60% 70% at 25% 50%, rgba(10,5,14,0.85), transparent 75%),
+                radial-gradient(ellipse 120% 90% at 50% 50%, #2e1a3e 0%, #1c1027 55%, #0c0710 100%);
+        }
+        /* Cream: antique burgundy rose + damask lattice */
+        .tone-prod-b {
+            --pattern: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'><g fill='none' stroke='%23c6a46a' stroke-width='0.8'><path d='M36 0L72 36L36 72L0 36Z'/><path d='M36 22c5 6 5 22 0 28c-5-6-5-22 0-28z'/><path d='M22 36c6-5 22-5 28 0c-6 5-22 5-28 0z'/><circle cx='36' cy='36' r='3'/><circle cx='0' cy='0' r='2'/><circle cx='72' cy='0' r='2'/><circle cx='0' cy='72' r='2'/><circle cx='72' cy='72' r='2'/></g></svg>"); --pattern-size: 72px 72px; --mask-x: 72%;
+            background:
+                radial-gradient(ellipse 40% 55% at 28% 45%, rgba(222,176,140,0.20), transparent 70%),
+                radial-gradient(ellipse 60% 70% at 75% 50%, rgba(14,5,8,0.85), transparent 75%),
+                radial-gradient(ellipse 120% 90% at 50% 50%, #3a1a26 0%, #241018 55%, #0e0609 100%);
+        }
+        /* Lip balm: oxblood + deco diamonds */
+        .tone-prod-c {
+            --pattern: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='104' viewBox='0 0 60 104'><g fill='none' stroke='%23c6a46a' stroke-width='0.8'><path d='M30 0L60 26L30 52L0 26Z'/><path d='M30 52L60 78L30 104L0 78Z'/><path d='M30 12L46 26L30 40L14 26Z'/><path d='M30 64L46 78L30 92L14 78Z'/><path d='M0 0V104M60 0V104'/></g></svg>"); --pattern-size: 60px 104px; --mask-x: 30%;
+            background:
+                radial-gradient(ellipse 40% 55% at 72% 45%, rgba(220,160,110,0.20), transparent 70%),
+                radial-gradient(ellipse 60% 70% at 25% 50%, rgba(14,4,6,0.85), transparent 75%),
+                radial-gradient(ellipse 120% 90% at 50% 50%, #3d1418 0%, #260c10 55%, #100507 100%);
         }
 
         .vision-text { text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 12px rgba(0,0,0,0.6); }
@@ -351,7 +382,7 @@
 
 <main>
         <!-- Product 03 -->
-        <section class="snap-section relative w-full h-[100vh] flex items-center justify-center tone-prod-b overflow-hidden" id="re2dn-lipbalm" data-section="intro" aria-label="리투디엔 더마플라스트 립밤">
+        <section class="snap-section relative w-full h-[100vh] flex items-center justify-center tone-prod-c overflow-hidden" id="re2dn-lipbalm" data-section="intro" aria-label="리투디엔 더마플라스트 립밤">
             <nav aria-label="breadcrumb" class="absolute top-24 left-0 w-full z-20">
                 <ol class="container mx-auto px-6 md:px-12 flex gap-2 text-xs text-gray-400">
                     <li><a href="/" class="hover:text-white">홈</a></li><li>/</li>
@@ -360,7 +391,6 @@
                 </ol>
             </nav>
 
-            <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-prism-deep/20 rounded-full blur-[100px]"></div>
             <div class="container mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-16 relative z-10 h-full">
                 
                 <div class="w-full md:w-1/2 flex flex-col justify-center text-left mt-10 md:mt-0">
@@ -391,7 +421,7 @@
         </section>
 
         <!-- Product Detail -->
-        <section class="snap-section relative w-full flex items-center justify-center tone-prod-b overflow-hidden pt-24 pb-10" data-section="intro" aria-label="리투디엔 더마플라스트 립밤 상세 정보">
+        <section class="snap-section relative w-full flex items-center justify-center tone-prod-c overflow-hidden pt-24 pb-10" data-section="intro" aria-label="리투디엔 더마플라스트 립밤 상세 정보">
             <div class="container mx-auto px-6 md:px-12 relative z-10 max-w-5xl overflow-y-auto max-h-full" style="scrollbar-width:none;">
                 <p class="text-prism-light/90 text-xs md:text-sm font-medium tracking-[0.2em] mb-2">KEY INGREDIENTS</p>
                 <h2 class="text-2xl md:text-4xl font-black text-white mb-6 md:mb-8">리투디엔 더마플라스트 립밤 핵심 성분</h2>
@@ -487,8 +517,8 @@
                                 <span class="hidden md:inline text-gray-600">|</span>
                                 <span>Republic of Korea</span>
                             </div>
-                            <a href="/cdn-cgi/l/email-protection#ca898f858aa2b3a7a3a4beafb8a4abbea3a5a4aba6e4a9a5a7" class="text-xs md:text-sm font-medium text-prism-light hover:text-prism-mid transition-colors">
-                                <span class="__cf_email__" data-cfemail="5d1e18121d352430343329382f333c293432333c31733e3230">[email&#160;protected]</span>
+                            <a href="/cdn-cgi/l/email-protection#26656369664e5f4b4f485243544847524f4948474a0845494b" class="text-xs md:text-sm font-medium text-prism-light hover:text-prism-mid transition-colors">
+                                <span class="__cf_email__" data-cfemail="6427212b240c1d090d0a1001160a05100d0b0a05084a070b09">[email&#160;protected]</span>
                             </a>
                         </div>
                         
@@ -705,6 +735,15 @@
             if (map[page]) document.querySelectorAll(`#navbar a[href="${map[page]}"]`).forEach(a => a.classList.add('nav-current'));
         });
     </script>
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
