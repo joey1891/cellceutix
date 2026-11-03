@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://cellceutix.kr/</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://rqcuaqsyxkfapoyqiwxy.supabase.co/storage/v1/object/sign/Homepage/CellCeutix_Re2DN%20ampoule.png?token=eyJraWQiOiI5ZjRiNThmMy1lMDAyLTQ3NzMtYWRjZi1iYTlhNDc0MjUzZjQiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJIb21lcGFnZS9DZWxsQ2V1dGl4X1JlMkROIGFtcG91bGUucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MzcxODYyOCwiZXhwIjoyMTA5MDc4NjI4fQ.egyyHUk8Usx1gRLpHw4Sn7EPbZYKbKJ9OdoZ02QBvT9BkKMBxlzLpksZ3Nlr78PvahdqizQIf52JaEzAtylGgg</image:loc>
+      <image:title>셀슈틱스 리투디엔 더마플라스트 앰플 Re2DN Dermaplast Ampoule</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cellceutix.kr/MedicalAesthetics.html</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
